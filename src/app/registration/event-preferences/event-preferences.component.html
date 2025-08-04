@@ -1,0 +1,86 @@
+<h2 class="form-title">🏅 Event Preferences</h2>
+
+<form [formGroup]="preferencesForm" (ngSubmit)="onSubmit()" class="form-container">
+
+  <!-- Indoor Events Section -->
+  <mat-card class="section-card">
+    <h3>
+      🏠 Indoor Events
+      <span class="selection-count">{{ selectedIndoor.length }}/3 selected</span>
+    </h3>
+
+    <mat-selection-list formControlName="indoorEvents" multiple>
+      <mat-list-option *ngFor="let event of indoorEvents" [value]="event" [disabled]="
+        selectedIndoor.length >= 3 && !selectedIndoor.includes(event)
+      ">
+        {{ event }}
+      </mat-list-option>
+    </mat-selection-list>
+
+    <mat-hint *ngIf="selectedIndoor.length > 3" class="error-msg">
+      ⚠️ Please select only 3 indoor events.
+    </mat-hint>
+
+    <div *ngIf="selectedIndoor.length === 3" class="ratings-section">
+      <h4>Rate your skill level for each selected sport</h4>
+      <div *ngFor="let event of selectedIndoor" class="rating-row">
+        <span class="event-label">{{ event }}</span>
+        <mat-slider
+          min="1"
+          max="10"
+          step="1"
+          thumbLabel
+          tickInterval="1"
+          [(ngModel)]="indoorRatings[event]"
+          [name]="event"
+          [ngModelOptions]="{ standalone: true }"
+        ></mat-slider>
+        <span class="rating-value">{{ indoorRatings[event] || 5 }}/10</span>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Outdoor Events Section -->
+  <mat-card class="section-card">
+    <h3>
+      🌳 Outdoor Events
+      <span class="selection-count">{{ selectedOutdoor.length }}/3 selected</span>
+    </h3>
+
+    <mat-selection-list formControlName="outdoorEvents" multiple>
+      <mat-list-option *ngFor="let event of outdoorEvents" [value]="event" [disabled]="
+        selectedOutdoor.length >= 3 && !selectedOutdoor.includes(event)
+      ">
+        {{ event }}
+      </mat-list-option>
+    </mat-selection-list>
+
+    <mat-hint *ngIf="selectedOutdoor.length > 3" class="error-msg">
+      ⚠️ Please select only 3 outdoor events.
+    </mat-hint>
+
+    <div *ngIf="selectedOutdoor.length === 3" class="ratings-section">
+      <h4>Rate your skill level for each selected sport</h4>
+      <div *ngFor="let event of selectedOutdoor" class="rating-row">
+        <span class="event-label">{{ event }}</span>
+        <mat-slider
+          min="1"
+          max="10"
+          step="1"
+          thumbLabel
+          tickInterval="1"
+          [(ngModel)]="outdoorRatings[event]"
+          [name]="event"
+          [ngModelOptions]="{ standalone: true }"
+        ></mat-slider>
+        <span class="rating-value">{{ outdoorRatings[event] || 5 }}/10</span>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Submit Button -->
+  <div class="button-row">
+    <button mat-stroked-button color="accent" type="button" (click)="goBack()">← Back</button>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </div>
+</form>

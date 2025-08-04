@@ -1,0 +1,43 @@
+<div class="intro-card">
+  <h2>🏆 Get Ready to Play!</h2>
+  <p>We’re gearing up for some exciting sports events! Help us plan better by sharing your preferences. It will only take a few minutes.</p>
+  <p class="note"><strong>Note:</strong> When you submit this form, your name and email will be visible to the organizers.</p>
+</div>
+
+<form [formGroup]="basicInfoForm" (ngSubmit)="onNext()" class="form-section">
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Full Name</mat-label>
+    <input matInput formControlName="fullName" placeholder="e.g. John Doe" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Major / Department</mat-label>
+    <mat-select formControlName="major" required>
+      <mat-option value="Analytics">📊 Analytics</mat-option>
+      <mat-option value="Marketing Services">📢 Marketing Services</mat-option>
+      <mat-option value="Tech">💻 Tech</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Employee ID</mat-label>
+    <input matInput formControlName="employeeId" placeholder="e.g. EMP12345" required>
+  </mat-form-field>
+
+  <div class="upload-section">
+    <label class="upload-label" for="photoUpload">
+      <mat-icon>upload</mat-icon>
+      Upload a recent photo (optional)
+    </label>
+    <input type="file" id="photoUpload" (change)="onFileChange($event)" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,audio/*,video/*">
+    <div *ngIf="selectedFileName" class="file-name">📎 {{ selectedFileName }}</div>
+  </div>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!basicInfoForm.valid">
+      Next →
+    </button>
+  </div>
+
+</form>
