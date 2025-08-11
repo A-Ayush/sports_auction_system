@@ -14,15 +14,25 @@ export class BasicInfoComponent implements OnInit {
   selectedFileName: string | null = null;
 
   majors = ['Analytics', 'Marketing Services', 'Tech'];
+  sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
-  constructor(private fb: FormBuilder, private router: Router,private playerService: PlayerService) {}
+  constructor(private fb: FormBuilder, private router: Router, private playerService: PlayerService) {}
 
   ngOnInit(): void {
     this.basicInfoForm = this.fb.group({
       fullName: ['', [Validators.required]],
       major: ['', [Validators.required]],
       employeeId: ['', [Validators.required]],
-      photo: [null] // Optional file upload
+      photo: [null], // Optional file upload
+
+      // Jersey details
+      jerseyName: ['', [Validators.maxLength(30)]],
+      gender: ['', [Validators.required]],
+      jerseyNumber: [null, [Validators.min(0), Validators.max(99)]],
+      size: ['', [Validators.required]],
+
+      // Role selection
+    role: ['', [Validators.required]]
     });
   }
 
@@ -49,29 +59,41 @@ export class BasicInfoComponent implements OnInit {
 
   onNext(): void {
     if (this.basicInfoForm.valid) {
-    const formData = this.basicInfoForm.value;
+      const formData = this.basicInfoForm.value;
 
-    const player = {
-      name: formData.fullName,
-      empId: formData.employeeId,
-      department: formData.major
-    };
+      const player = {
+        name: formData.fullName,
+        empId: formData.employeeId,
+        department: formData.major,
 
-    console.log("player == " + player);
+        // Jersey details
+        jerseyName: formData.jerseyName || null,
+        gender: formData.gender,
+        jerseyNumber: formData.jerseyNumber !== null ? formData.jerseyNumber : null,
+        size: formData.size,
+         role: formData.role
+      };
 
-    this.playerService.create(player, this.uploadedFile!).subscribe({
-      next: (res) => {
-        console.log('Player created:', res);
-        // Optionally store res (player object)
-        this.router.navigate(['/registration/event-preferences']);
-      },
-      error: (err) => {
-        console.error('Error creating player:', err);
-        alert('Failed to submit the form. Please try again.');
-      }
-    });
-  } else {
-    this.basicInfoForm.markAllAsTouched();
-  }
+      console.log("player == ", player);
+
+      // If your service expects FormData (for file + json), you may need to send multipart.
+      // For now I keep your original playerService.create(player, file) contract.
+      this.playerService.create(player, this.uploadedFile ?? undefined).subscribe({
+        next: (res) => {
+          console.log('Player created:', res);
+          this.playerService.setPlayer({
+            ...player,
+            photoFile: this.uploadedFile
+          });
+          this.router.navigate(['/registration/preview']);
+        },
+        error: (err) => {
+          console.error('Error creating player:', err);
+          alert('Failed to submit the form. Please try again.');
+        }
+      });
+    } else {
+      this.basicInfoForm.markAllAsTouched();
+    }
   }
 }

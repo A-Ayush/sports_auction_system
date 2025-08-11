@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
 import { BasicInfoComponent } from './registration/basic-info/basic-info.component';
 import { EventPreferencesComponent } from './registration/event-preferences/event-preferences.component';
+import { PreviewComponent } from './registration/preview/preview.component';
 
 const routes: Routes = [
   // Redirect empty path to the first step of registration
@@ -16,6 +17,8 @@ const routes: Routes = [
     children: [
       { path: 'basic-info', component: BasicInfoComponent },
       { path: 'event-preferences', component: EventPreferencesComponent },
+      { path: 'preview', component: PreviewComponent },
+
 
       // Redirect /registration to basic-info step
       { path: '', redirectTo: 'basic-info', pathMatch: 'full' }
@@ -23,7 +26,9 @@ const routes: Routes = [
   },
 
   // Wildcard route for any unknown paths, redirect to registration start
-  { path: '**', redirectTo: 'registration/basic-info' }
+  { path: '**', redirectTo: 'registration/basic-info' },
+
+  // { path: 'registration/preview', component: PreviewComponent }
 ];
 
 @NgModule({

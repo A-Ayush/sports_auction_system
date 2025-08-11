@@ -9,35 +9,90 @@
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Full Name</mat-label>
     <input matInput formControlName="fullName" placeholder="e.g. John Doe" required>
+    <mat-error *ngIf="basicInfoForm.get('fullName')?.hasError('required')">
+      Full name is required
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Major / Department</mat-label>
     <mat-select formControlName="major" required>
-      <mat-option value="Analytics">📊 Analytics</mat-option>
-      <mat-option value="Marketing Services">📢 Marketing Services</mat-option>
-      <mat-option value="Tech">💻 Tech</mat-option>
+      <mat-option *ngFor="let m of majors" [value]="m">{{ m }}</mat-option>
     </mat-select>
+    <mat-error *ngIf="basicInfoForm.get('major')?.hasError('required')">Please select a department</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Employee ID</mat-label>
     <input matInput formControlName="employeeId" placeholder="e.g. EMP12345" required>
+    <mat-error *ngIf="basicInfoForm.get('employeeId')?.hasError('required')">Employee ID is required</mat-error>
   </mat-form-field>
 
-  <div class="upload-section">
-    <label class="upload-label" for="photoUpload">
-      <mat-icon>upload</mat-icon>
-      Upload a recent photo (optional)
-    </label>
-    <input type="file" id="photoUpload" (change)="onFileChange($event)" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,audio/*,video/*">
-    <div *ngIf="selectedFileName" class="file-name">📎 {{ selectedFileName }}</div>
-  </div>
+  <!-- Jersey Details Section -->
+<!-- Jersey Details Section -->
+<div class="section-header">
+  <h3>Jersey Details</h3>
+</div>
 
-  <div class="button-row">
-    <button mat-raised-button color="primary" type="submit" [disabled]="!basicInfoForm.valid">
-      Next →
-    </button>
-  </div>
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Name on Jersey</mat-label>
+  <input matInput formControlName="jerseyName" placeholder="Name that will appear on jersey" maxlength="30">
+  <mat-hint align="end">{{ basicInfoForm.get('jerseyName')?.value?.length || 0 }}/30</mat-hint>
+</mat-form-field>
+
+<!-- <div class="gender-row">
+  <label class="gender-label">Gender</label>
+  <mat-radio-group formControlName="gender" class="gender-options" aria-label="Select gender">
+    <mat-radio-button value="Male">Male</mat-radio-button>
+    <mat-radio-button value="Female">Female</mat-radio-button>
+    <mat-radio-button value="Other">Other</mat-radio-button>
+  </mat-radio-group>
+  <mat-error *ngIf="basicInfoForm.get('gender')?.hasError('required')">Gender is required</mat-error>
+</div> -->
+
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Number on Jersey</mat-label>
+  <input matInput type="number" formControlName="jerseyNumber" placeholder="e.g. 10" min="0" max="99">
+  <mat-error *ngIf="basicInfoForm.get('jerseyNumber')?.invalid">Provide a valid number (0-99)</mat-error>
+</mat-form-field>
+
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Size</mat-label>
+  <mat-select formControlName="size" required>
+    <mat-option *ngFor="let s of sizes" [value]="s">{{ s }}</mat-option>
+  </mat-select>
+  <mat-error *ngIf="basicInfoForm.get('size')?.hasError('required')">Please select a size</mat-error>
+</mat-form-field>
+
+<!-- Role Selection Section -->
+<div class="section-header">
+  <h3>Participation Role</h3>
+</div>
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Would you be interested in taking up any of the following roles?</mat-label>
+  <mat-select formControlName="role" required>
+    <mat-option value="Team Owner">Team Owner (participate in auction, organize & build the team with your manager)</mat-option>
+    <mat-option value="Team Manager">Team Manager (coordinate with owner participation/logistics)</mat-option>
+    <mat-option value="Team Captain">Team Captain (lead in select sports games & motivate team)</mat-option>
+    <mat-option value="NA">NA</mat-option>
+  </mat-select>
+  <mat-error *ngIf="basicInfoForm.get('role')?.hasError('required')">Please select a role</mat-error>
+</mat-form-field>
+
+<!-- Upload Section -->
+<div class="upload-section">
+  <label class="upload-label" for="photoUpload">
+    <mat-icon>upload</mat-icon>
+    Upload a recent photo (optional)
+  </label>
+  <input type="file" id="photoUpload" (change)="onFileChange($event)" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*,audio/*,video/*">
+  <div *ngIf="selectedFileName" class="file-name">📎 {{ selectedFileName }}</div>
+</div>
+
+<div class="button-row">
+  <button mat-raised-button color="primary" type="submit" [disabled]="!basicInfoForm.valid">
+    Next →
+  </button>
+</div>
 
 </form>

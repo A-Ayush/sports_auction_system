@@ -1,0 +1,21 @@
+<div class="container">
+  <h2 class="title">🎯 Confirm Your Information</h2>
+
+  <div class="card">
+    <div class="info-section">
+      <p><strong>👤 Full Name:</strong> {{ player?.name }}</p>
+      <p><strong>🆔 Employee ID:</strong> {{ player?.empId }}</p>
+      <p><strong>🏢 Department:</strong> {{ player?.department }}</p>
+    </div>
+
+    <div class="photo-section" *ngIf="imageSrc">
+      <p><strong>📷 Selected Photo:</strong></p>
+      <img [src]="imageSrc" alt="Uploaded Image" />
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="back-btn">🔙 Back</button>
+    <button class="proceed-btn" [disabled]="disableProceed" (click)="proceed()">✅ Proceed to Event Preferences</button>
+  </div>
+</div>

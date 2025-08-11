@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Player {
@@ -8,6 +8,16 @@ export interface Player {
   empId: string;
   department: string;
   photoFilename?: string;
+  photoFile?: File | null;
+
+  // New Jersey details
+  jerseyName?: string | null;
+  gender?: string;
+  jerseyNumber?: number | null;
+  size?: string;
+
+  // Role selection
+  role?: string;
 }
 
 @Injectable({
@@ -17,6 +27,20 @@ export class PlayerService {
   private baseUrl = 'http://localhost:8081/api/players';
 
   constructor(private http: HttpClient) {}
+
+  private playerData: Player | null = null;
+
+  setPlayer(player: Player): void {
+    this.playerData = player;
+  }
+
+  getPlayer(): Player | null {
+    return this.playerData;
+  }
+
+  clearPlayer(): void {
+    this.playerData = null;
+  }
 
   getAll(): Observable<Player[]> {
     return this.http.get<Player[]>(this.baseUrl);
@@ -31,9 +55,20 @@ export class PlayerService {
     formData.append('name', player.name || '');
     formData.append('empId', player.empId || '');
     formData.append('department', player.department || '');
+
+    // New jersey details
+    formData.append('jerseyName', player.jerseyName || '');
+    formData.append('gender', player.gender || '');
+    formData.append('jerseyNumber', player.jerseyNumber != null ? player.jerseyNumber.toString() : '');
+    formData.append('size', player.size || '');
+
+    // Role
+    formData.append('role', player.role || '');
+
     if (photo) {
       formData.append('photo', photo, photo.name);
     }
+
     return this.http.post<Player>(this.baseUrl, formData);
   }
 
@@ -47,5 +82,22 @@ export class PlayerService {
 
   getPhoto(id: number): Observable<Blob> {
     return this.http.get(`${this.baseUrl}/${id}/photo`, { responseType: 'blob' });
+  }
+
+  login(empId: string, name: string): Observable<Player> {
+    return this.http.get<Player>(`${this.baseUrl}/login?empId=${empId}&name=${name}`);
+  }
+
+  setLoggedInPlayer(player: Player) {
+    localStorage.setItem('loggedInPlayer', JSON.stringify(player));
+  }
+
+  getLoggedInPlayer(): Player | null {
+    const data = localStorage.getItem('loggedInPlayer');
+    return data ? JSON.parse(data) : null;
+  }
+
+  hasSelectedEvents(playerId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/${playerId}/hasSelectedEvents`);
   }
 }

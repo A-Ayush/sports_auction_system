@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EventService } from './eventService/event.service';
+import { PlayerService } from '../basic-info/playerservice/player.service';
 
 @Component({
   selector: 'app-event-preferences',
@@ -25,7 +26,7 @@ export class EventPreferencesComponent implements OnInit {
   indoorRatings: Record<string, number> = {};
   outdoorRatings: Record<string, number> = {};
 
-  constructor(private fb: FormBuilder,private eventService: EventService) {}
+  constructor(private fb: FormBuilder,private eventService: EventService,private playerService:PlayerService) {}
 
   ngOnInit(): void {
     this.preferencesForm = this.fb.group({
@@ -77,16 +78,20 @@ export class EventPreferencesComponent implements OnInit {
     return;
   }
 
+  console.log(this.playerService.getPlayer())
+
   const inEvents: any[] = this.selectedIndoor.map(name => ({
     type: 'INDOOR',
     nameOfEvent: name,
-    rating: this.indoorRatings[name]
+    rating: this.indoorRatings[name],
+    player: this.playerService.getPlayer()
   }));
 
   let outEvents: any[] = this.selectedOutdoor.map(name => ({
     type: 'OUTDOOR',
     nameOfEvent: name,
-    rating: this.outdoorRatings[name]
+    rating: this.outdoorRatings[name],
+    player: this.playerService.getPlayer()
   }));
 
   const allEvents = [...outEvents, ...inEvents];

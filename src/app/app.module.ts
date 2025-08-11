@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -22,13 +22,18 @@ import { EventPreferencesComponent } from './registration/event-preferences/even
 import { AppRoutingModule } from './app-routing.module';
 import { PlayerService } from './registration/basic-info/playerservice/player.service';
 import { EventService } from './registration/event-preferences/eventService/event.service';
+import { PreviewComponent } from './registration/preview/preview.component';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
     BasicInfoComponent,
-    EventPreferencesComponent
+    EventPreferencesComponent,
+    PreviewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +42,7 @@ import { EventService } from './registration/event-preferences/eventService/even
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+
 
     // Material modules
     MatInputModule,
@@ -50,6 +56,7 @@ import { EventService } from './registration/event-preferences/eventService/even
     MatCardModule
   ],
   providers: [PlayerService,EventService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
