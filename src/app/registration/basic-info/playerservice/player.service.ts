@@ -29,19 +29,29 @@ export class PlayerService {
 
   constructor(private http: HttpClient) {}
 
-  private playerData: Player | null = null;
+  playerData!: Player;
 
   setPlayer(player: Player): void {
     this.playerData = player;
   }
 
-  getPlayer(): Player | null {
+  getPlayer(): Player {
     return this.playerData;
   }
 
   clearPlayer(): void {
-    this.playerData = null;
+    this.playerData;
   }
+
+  private selectedEvents: any[] = [];
+
+setSelectedEvents(events: any[]) {
+  this.selectedEvents = events;
+}
+
+getSelectedEvents() {
+  return this.selectedEvents;
+}
 
   getAll(): Observable<Player[]> {
     return this.http.get<Player[]>(this.baseUrl);

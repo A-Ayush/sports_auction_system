@@ -14,8 +14,17 @@
     </div>
   </div>
 
+  <div *ngIf="selectedEvents.length > 0" class="card">
+    <h3>📋 Your Selected Events & Ratings</h3>
+    <ul>
+      <li *ngFor="let event of selectedEvents">
+        {{ event.type }} - {{ event.nameOfEvent }} : {{ event.rating }}/10
+      </li>
+    </ul>
+  </div>
+
   <div class="action-buttons">
-    <button class="back-btn">🔙 Back</button>
+    <button class="back-btn" (click)="router.navigate(['/registration/basic-info'])">🔙 Back</button>
     <button class="proceed-btn" [disabled]="disableProceed" (click)="proceed()">✅ Proceed to Event Preferences</button>
   </div>
 </div>

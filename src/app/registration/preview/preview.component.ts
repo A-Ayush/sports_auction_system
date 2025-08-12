@@ -11,8 +11,9 @@ export class PreviewComponent implements OnInit {
   player: any;
   imageSrc: string | ArrayBuffer | null = null;
   disableProceed = false;
+  selectedEvents: any[] = [];
 
-  constructor(private playerService: PlayerService, private router: Router) {}
+  constructor(private playerService: PlayerService, public router: Router) {}
 
   ngOnInit(): void {
     this.player = this.playerService.getPlayer();
@@ -22,6 +23,8 @@ export class PreviewComponent implements OnInit {
       this.router.navigate(['/registration/basic-info']);
       return;
     }
+
+    this.selectedEvents = this.playerService.getSelectedEvents();
 
     // Check if already selected event (replace with actual event check API)
     this.playerService.hasSelectedEvents(this.player.id).subscribe(result => {
