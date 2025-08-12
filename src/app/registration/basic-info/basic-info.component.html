@@ -50,6 +50,25 @@
   <mat-error *ngIf="basicInfoForm.get('gender')?.hasError('required')">Gender is required</mat-error>
 </div> -->
 
+<div class="section-header">
+  <h3>Gender</h3>
+</div>
+
+<mat-radio-group 
+  formControlName="gender" 
+  class="gender-options" 
+  aria-label="Select gender">
+  
+  <mat-radio-button value="Male">Male</mat-radio-button>
+  <mat-radio-button value="Female">Female</mat-radio-button>
+  <mat-radio-button value="Other">Other</mat-radio-button>
+
+</mat-radio-group>
+
+<mat-error *ngIf="basicInfoForm.get('gender')?.hasError('required')">
+  Gender is required
+</mat-error>
+
 <mat-form-field appearance="outline" class="full-width">
   <mat-label>Number on Jersey</mat-label>
   <input matInput type="number" formControlName="jerseyNumber" placeholder="e.g. 10" min="0" max="99">
@@ -90,7 +109,7 @@
 </div>
 
 <div class="button-row">
-  <button mat-raised-button color="primary" type="submit" [disabled]="!basicInfoForm.valid">
+  <button mat-raised-button color="primary" type="submit" >
     Next →
   </button>
 </div>

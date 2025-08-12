@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
@@ -53,7 +54,8 @@ import { LoginComponent } from './login/login.component';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatRadioModule
   ],
   providers: [PlayerService,EventService],
   bootstrap: [AppComponent],

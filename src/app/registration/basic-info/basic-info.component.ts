@@ -82,7 +82,7 @@ export class BasicInfoComponent implements OnInit {
         next: (res) => {
           console.log('Player created:', res);
           this.playerService.setPlayer({
-            ...player,
+            ...res,
             photoFile: this.uploadedFile
           });
           this.router.navigate(['/registration/preview']);

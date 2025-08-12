@@ -70,6 +70,9 @@ export class PlayerService {
       formData.append('photo', photo, photo.name);
     }
 
+    console.log(formData);
+    console.log([... (formData as any).entries()]);
+
     return this.http.post<Player>(this.baseUrl, formData);
   }
 
