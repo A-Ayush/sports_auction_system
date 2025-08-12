@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface Player {
   id?: number;
@@ -24,7 +25,7 @@ export interface Player {
   providedIn: 'root'
 })
 export class PlayerService {
-  private baseUrl = 'http://localhost:8081/api/players';
+  private baseUrl = `${environment.apiUrl}/players`; // <-- Use environment variable
 
   constructor(private http: HttpClient) {}
 

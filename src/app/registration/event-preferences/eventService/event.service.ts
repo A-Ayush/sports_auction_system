@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Player } from '../../basic-info/playerservice/player.service';
+import { environment } from 'src/environments/environment'; // <-- Add this import
 
 export interface Event {
   id?: number;
   type: string;
   nameOfEvent: string;
   rating: number;
-  player:Player;
+  player: Player;
   // Optionally add: playerId if needed in future
 }
 
@@ -16,7 +17,7 @@ export interface Event {
   providedIn: 'root'
 })
 export class EventService {
-  private baseUrl = 'http://localhost:8081/api/events';
+  private baseUrl = `${environment.apiUrl}/events`; // <-- Use environment variable
 
   constructor(private http: HttpClient) {}
 
