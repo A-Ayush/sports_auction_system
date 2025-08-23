@@ -1,7 +1,8 @@
-<h2 class="form-title">🏅 Event Preferences</h2>
+<h1 class="form-title">🏅 Event Preferences</h1>
 
 <form [formGroup]="preferencesForm" (ngSubmit)="onSubmit()" class="form-container">
 
+    <mat-card-subtitle class="header-social"> Which of the following social events would you like to participate in?</mat-card-subtitle>
   <!-- Common template for any event section -->
   <ng-template #eventSection let-title let-events="events" let-controlName="controlName" let-max="max" let-selected="selected" let-ratings="ratings">
     <mat-card class="section-card">
@@ -21,7 +22,7 @@
       <mat-hint *ngIf="selected.length > max" class="error-msg">
         ⚠️ Please select only {{ max }} events.
       </mat-hint>
-
+    
       <div *ngIf="selected.length === max" class="ratings-section">
         <h4>Rate your skill level for each selected sport/activity</h4>
         <div *ngFor="let event of selected" class="rating-row">
@@ -53,6 +54,7 @@
   }"></ng-container>
 
   <!-- Outdoor Events -->
+   <mat-card-subtitle class="header-social"> Which of the following indoor/outdoor events would you like to participate in?</mat-card-subtitle>
   <ng-container *ngTemplateOutlet="eventSection; context: {
     title: '🌳 Outdoor Events',
     events: outdoorEvents,
@@ -63,16 +65,17 @@
   }"></ng-container>
 
   <!-- Social Events -->
-  <ng-container *ngTemplateOutlet="eventSection; context: {
+  <!-- <ng-container *ngTemplateOutlet="eventSection; context: {
     title: '🎉 Social Events',
     events: socialEvents,
     controlName: 'socialEvents',
     max: 2,
     selected: selectedSocial,
     ratings: socialRatings
-  }"></ng-container>
+  }"></ng-container> -->
 
   <!-- Cultural Activities -->
+  <mat-card-subtitle class="header-social"> Which of the following cultural activites would you like to participate in?</mat-card-subtitle>
   <ng-container *ngTemplateOutlet="eventSection; context: {
     title: '🎭 Cultural Activities',
     events: culturalEvents,

@@ -20,6 +20,7 @@ export class BasicInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.basicInfoForm = this.fb.group({
+      email: ['', [Validators.required,Validators.email]],
       fullName: ['', [Validators.required]],
       major: ['', [Validators.required]],
       employeeId: ['', [Validators.required]],
@@ -60,8 +61,8 @@ export class BasicInfoComponent implements OnInit {
   onNext(): void {
     if (this.basicInfoForm.valid) {
       const formData = this.basicInfoForm.value;
-
       const player = {
+        email: formData.email,
         name: formData.fullName,
         empId: formData.employeeId,
         department: formData.major,
@@ -88,8 +89,15 @@ export class BasicInfoComponent implements OnInit {
           this.router.navigate(['/registration/preview']);
         },
         error: (err) => {
-          console.error('Error creating player:', err);
-          alert('Failed to submit the form. Please try again.');
+          if (err.status === 409) {
+            alert('User already exists. Please use a different email or employee ID.');
+            this.basicInfoForm.reset(); // Reset the form on 409
+            this.uploadedFile = null;
+            this.selectedFileName = null;
+          } else {
+            console.error('Error creating player:', err);
+            alert('Failed to submit the form. Please try again.');
+          }
         }
       });
     } else {
