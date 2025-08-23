@@ -1,0 +1,25 @@
+<form (ngSubmit)="onSubmit()" #deleteForm="ngForm" class="delete-form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Enter Email</mat-label>
+    <input matInput type="email" id="email" name="email" [(ngModel)]="email" required placeholder="Enter email address">
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>
+
+<div class="player-details" *ngIf="player">
+  <div class="detail-row">
+    <label>Name:</label>
+    <span>{{ player?.name || '-' }}</span>
+  </div>
+  <div class="detail-row">
+    <label>Email:</label>
+    <span>{{ player?.email || '-' }}</span>
+  </div>
+  <div class="detail-row">
+    <label>Emp ID:</label>
+    <span>{{ player?.empId || '-' }}</span>
+  </div>
+  <div *ngIf="player?.empId" class="delete-row">
+    <button mat-raised-button color="warn" (click)="onDelete()">Delete</button>
+  </div>
+</div>

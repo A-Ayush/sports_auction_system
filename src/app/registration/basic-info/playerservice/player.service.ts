@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 
 export interface Player {
   id?: number;
+  email: string;
   name: string;
   empId: string;
   department: string;
@@ -63,6 +64,7 @@ getSelectedEvents() {
 
   create(player: Partial<Player>, photo?: File): Observable<Player> {
     const formData = new FormData();
+    formData.append('email', player.email || '');
     formData.append('name', player.name || '');
     formData.append('empId', player.empId || '');
     formData.append('department', player.department || '');

@@ -13,15 +13,32 @@ export class EventPreferencesComponent implements OnInit {
   preferencesForm!: FormGroup;
 
   indoorEvents = [
-    'Table Tennis', 'Carrom', 'Chess', 'Foosball', 'Quizzing',
-    'Rubik’s Cube Challenge', 'Card Games (Poker, Bridge, etc.)',
-    'Bar Games (Pictionary, etc.)', 'Word Games (Scrabble, Wordle-Off, etc.)',
-    'Board Game Mix', 'E-sports (Valorant, etc.)'
-  ];
+    'Bar Games (Pictionary, etc.)',
+    'Board Game Mix',
+    'Card Games (Poker, Bridge, etc.)',
+    'Carrom',
+    'Chess',
+    'E-sports (Valorant, etc.)',
+    'Foosball',
+    'Quizzing',
+    'Rubik’s Cube Challenge',
+    'Word Games (Scrabble, Wordle-Off, etc.)'
+  ].sort();
+
 
   outdoorEvents = [
-    'Cricket', 'Football', 'Volleyball', 'Badminton', 'Tug of War',
-    'Race / Track events', 'Kho-Kho', 'Kabaddi', 'Basketball', 'Handball'
+    'Badminton',
+    'Basketball',
+    'Cricket',
+    'Football',
+    'Handball',
+    'Kabaddi',
+    'Kho-Kho',
+    'Lawn Tennis',
+    'Race / Track events',
+    'Table Tennis',
+    'Tug of War',
+    'Volleyball'
   ];
 
   socialEvents = [
@@ -34,12 +51,12 @@ export class EventPreferencesComponent implements OnInit {
   ];
 
   culturalEvents = [
-    'Singing',
     'Dancing',
+    'Drama / Skit',
     'Musical instrument',
-    'Stand-up comedy',
-    'Drama / Skit'
-  ];
+    'Singing',
+    'Stand-up comedy'
+  ].sort();
 
   indoorRatings: Record<string, number> = {};
   outdoorRatings: Record<string, number> = {};
@@ -88,7 +105,7 @@ export class EventPreferencesComponent implements OnInit {
 
   onSubmit(): void {
     if (this.selectedIndoor.length !== 3 || this.selectedOutdoor.length !== 3 ||
-        this.selectedSocial.length !== 2 || this.selectedCultural.length !== 2) {
+       this.selectedCultural.length !== 2) {
       alert('⚠️ Please select required number of events in each category.');
       return;
     }
@@ -111,7 +128,10 @@ export class EventPreferencesComponent implements OnInit {
     ];
 
     Promise.all(allEvents.map(e => this.eventService.create(e).toPromise()))
-      .then(() => alert('✅ Preferences submitted successfully!'))
+      .then(() => {
+        alert('✅ Preferences submitted successfully!');
+        this.router.navigate(['/thank-you']);
+      })
       .catch(err => {
         console.error(err);
         this.playerService.setSelectedEvents(allEvents);

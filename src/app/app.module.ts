@@ -25,6 +25,8 @@ import { PlayerService } from './registration/basic-info/playerservice/player.se
 import { EventService } from './registration/event-preferences/eventService/event.service';
 import { PreviewComponent } from './registration/preview/preview.component';
 import { LoginComponent } from './login/login.component';
+import { ThankYouComponent } from './registration/thank-you/thank-you.component';
+import { DeletePlayerComponent } from './playersmutation/delete-player/delete-player.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { LoginComponent } from './login/login.component';
     BasicInfoComponent,
     EventPreferencesComponent,
     PreviewComponent,
-    LoginComponent
+    LoginComponent,
+    ThankYouComponent,
+    DeletePlayerComponent
   ],
   imports: [
     BrowserModule,

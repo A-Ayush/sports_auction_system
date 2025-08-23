@@ -7,12 +7,25 @@
 <form [formGroup]="basicInfoForm" (ngSubmit)="onNext()" class="form-section">
 
   <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email:</mat-label>
+    <input matInput formControlName="email" placeholder="e.g. john.doe@example.com" required type="email">
+    <mat-error *ngIf="basicInfoForm.get('email')?.hasError('required')">
+      Email is required
+    </mat-error>
+    <mat-error *ngIf="basicInfoForm.get('email')?.hasError('email') && !basicInfoForm.get('email')?.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
     <mat-label>Full Name</mat-label>
     <input matInput formControlName="fullName" placeholder="e.g. John Doe" required>
     <mat-error *ngIf="basicInfoForm.get('fullName')?.hasError('required')">
       Full name is required
     </mat-error>
   </mat-form-field>
+
+  
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Major / Department</mat-label>
@@ -40,15 +53,6 @@
   <mat-hint align="end">{{ basicInfoForm.get('jerseyName')?.value?.length || 0 }}/30</mat-hint>
 </mat-form-field>
 
-<!-- <div class="gender-row">
-  <label class="gender-label">Gender</label>
-  <mat-radio-group formControlName="gender" class="gender-options" aria-label="Select gender">
-    <mat-radio-button value="Male">Male</mat-radio-button>
-    <mat-radio-button value="Female">Female</mat-radio-button>
-    <mat-radio-button value="Other">Other</mat-radio-button>
-  </mat-radio-group>
-  <mat-error *ngIf="basicInfoForm.get('gender')?.hasError('required')">Gender is required</mat-error>
-</div> -->
 
 <div class="section-header">
   <h3>Gender</h3>
